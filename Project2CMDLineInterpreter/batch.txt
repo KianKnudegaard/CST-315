@@ -1,0 +1,4 @@
+echo Hello
+pwd
+ls; echo listed
+sleep 1; echo done sleeping
