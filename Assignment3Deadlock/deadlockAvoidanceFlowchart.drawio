@@ -1,0 +1,102 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="27.2.0">
+  <diagram name="Page-1" id="B_fZT1HoUkg5IR1UTmz6">
+    <mxGraphModel dx="1226" dy="671" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-1" value="Create Process" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="70" width="180" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-2" value="Try to access resource" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="365" y="110" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-3" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="K7AxVfR0JN4IPtyAAPrH-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="350" as="sourcePoint" />
+            <mxPoint x="360" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-4" value="IF&amp;nbsp;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="105" width="140" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-5" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="K7AxVfR0JN4IPtyAAPrH-2" target="K7AxVfR0JN4IPtyAAPrH-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="350" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-6" value="Use resource to complete task" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="630" y="330" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="K7AxVfR0JN4IPtyAAPrH-4" target="K7AxVfR0JN4IPtyAAPrH-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="350" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-8" value="Resource available" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="K7AxVfR0JN4IPtyAAPrH-7">
+          <mxGeometry x="0.0279" y="2" relative="1" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-9" value="WAIT for task. IF has waited too long, terminate. Else, check if resource is&amp;nbsp; available." style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="365" y="330" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="K7AxVfR0JN4IPtyAAPrH-4" target="K7AxVfR0JN4IPtyAAPrH-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="350" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-11" value="NOT available" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="K7AxVfR0JN4IPtyAAPrH-10">
+          <mxGeometry x="-0.0017" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-12" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" target="K7AxVfR0JN4IPtyAAPrH-17">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="350" as="sourcePoint" />
+            <mxPoint x="190" y="420" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="190" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-13" value="Resource unavailable" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="K7AxVfR0JN4IPtyAAPrH-12">
+          <mxGeometry x="-0.4563" y="-5" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="K7AxVfR0JN4IPtyAAPrH-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="490" y="390" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-15" value="Resource available" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="K7AxVfR0JN4IPtyAAPrH-14">
+          <mxGeometry x="0.0319" y="-4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-16" value="END" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="490" y="490" width="150" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-17" value="Resource is starved. Wait, and return to wait task." style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="140" y="440" width="130" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-18" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="K7AxVfR0JN4IPtyAAPrH-17" target="K7AxVfR0JN4IPtyAAPrH-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="350" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="K7AxVfR0JN4IPtyAAPrH-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.726;entryY=0.033;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="K7AxVfR0JN4IPtyAAPrH-6" target="K7AxVfR0JN4IPtyAAPrH-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="350" as="sourcePoint" />
+            <mxPoint x="500" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
