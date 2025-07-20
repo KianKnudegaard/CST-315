@@ -12,6 +12,7 @@ Examples:
 ```bash
 ls > files.txt
 cat < input.txt
+```
 
 ### 2. Command Piping (`|`)
 The shell now supports piping between commands using the `|` operator, allowing the output of one command to become the input of another. This mirrors one of the most powerful features in Unix/Linux environments like Ubuntu. Piping makes it possible to chain together simple commands to perform complex tasks efficiently.
@@ -20,3 +21,4 @@ Examples:
 ```bash
 ps aux | grep bash
 cat file.txt | sort | uniq
+```
