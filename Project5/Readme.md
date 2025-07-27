@@ -37,3 +37,10 @@ Processes can be created interactively or loaded from a batch file. The schedule
 
 ## 📂 File Structure
 
+project/
+├── shellCompiler.c # Main shell logic (extended to include scheduler)
+├── advancedScheduler.c # Preemptive scheduler logic (no main)
+├── VMmanager.c/.h # Virtual memory system
+├── schedulerBatch.txt # Example batch process file
+├── Makefile # Optional
+└── README.md # You're here
