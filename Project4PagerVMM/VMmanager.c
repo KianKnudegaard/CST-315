@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "VMmanager.h"
+#include "VMmanager.c"
 
 int tlb_hits = 0;
 int tlb_misses = 0;
