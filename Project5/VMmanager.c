@@ -1,15 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 #include "VMmanager.h"
 
-int tlb_hits = 0;
-int tlb_misses = 0;
-int process_count = 0;
 int fifo_queue[NUM_FRAMES];
 int fifo_front = 0;
 int fifo_rear = 0;
+int tlb_hits = 0;
+int tlb_misses = 0;
+int process_count = 0;
 
 Frame frames[NUM_FRAMES];
 Process processes[MAX_PROCESSES];
@@ -126,12 +124,9 @@ void access_memory(Process *process, int page_number, int offset, char mode) {
         printf("TLB HIT: Frame %d for Process %d, Page %d\n", frame_number, process->process_id, page_number);
     } else {
         if (!process->page_table[page_number].valid) {
-            load_page(process, page_number, 1);
-            frame_number = process->page_table[page_number].frame_number;
-        } else {
-            load_page(process, page_number, 0);
-            frame_number = process->page_table[page_number].frame_number;
+            load_page(process, page_number, 1); // hard fault
         }
+        frame_number = process->page_table[page_number].frame_number;
     }
     if ((mode == 'r' && !process->page_table[page_number].read_permission) ||
         (mode == 'w' && !process->page_table[page_number].write_permission)) {
