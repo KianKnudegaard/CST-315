@@ -1,0 +1,13 @@
+create file1.txt; 
+create file2.txt; 
+ls > output.txt; 
+sleep 2; 
+delete file1.txt; 
+delete file2.txt; 
+jobs;
+ls;
+whoami;
+end; 
+touch new.txt;
+rm new.txt;
+exit
