@@ -4,9 +4,10 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <pthread.h>
 #include <signal.h>
 #include "VMmanager.h"
-#include "advancedScheduler.c"
+#include "advancedScheduler.h"
 
 #define MAX_LINE 1024
 #define MAX_ARGS 64
@@ -31,7 +32,7 @@ typedef struct {
 Job jobs[MAX_JOBS];
 int job_count = 0;
 
-void add_job(pid_t pid, char *input) {
+void add_job(pid_t pid, const char *input) {
     if (job_count < MAX_JOBS) {
         jobs[job_count].pid = pid;
         strncpy(jobs[job_count].command, input, MAX_LINE - 1);
@@ -44,9 +45,8 @@ void add_job(pid_t pid, char *input) {
 }
 
 void parse_input(char *input, char **args) {
-    char *token;
     int i = 0;
-    token = strtok(input, " \t\r\n");
+    char *token = strtok(input, " \t\r\n");
     while (token != NULL && i < MAX_ARGS - 1) {
         args[i++] = token;
         token = strtok(NULL, " \t\r\n");
@@ -59,12 +59,29 @@ void handle_exit_signal(int sig) {
     exit(0);
 }
 
+void create_file(const char *filename) {
+    FILE *fp = fopen(filename, "w");
+    if (fp == NULL) {
+        perror("Error creating file");
+    } else {
+        printf("File '%s' created successfully.\n", filename);
+        fclose(fp);
+    }
+}
+
+void delete_file(const char *filename) {
+    if (remove(filename) == 0) {
+        printf("File '%s' deleted successfully.\n", filename);
+    } else {
+        perror("Error deleting file");
+    }
+}
+
 // Executes a single command with redirection support
 void execute_single_command(char **args, int background) {
     int in_redirect = -1, out_redirect = -1;
     char *input_file = NULL;
     char *output_file = NULL;
-    int vm_pid;
 
     // Scan for redirection operators
     for (int i = 0; args[i] != NULL; i++) {
@@ -107,25 +124,31 @@ void execute_single_command(char **args, int background) {
             close(fd);
         }
 
-        if (pid == 0) {
+        if (execvp(args[0], args) == -1) {
+            perror("Command failed");
+            exit(1);
+        }
+    }
+    else if (pid > 0) {
+        // register the command with the scheduler (before wait!)
+        PCB *vm_proc = sched_create_process(2, 1);
+        enqueue(&ready_queue, vm_proc);
+        if (pid_map_count < MAX_PID_MAP) {
+            pid_map[pid_map_count].shell_pid = pid;
+            pid_map[pid_map_count].vm_pid = vm_proc->pid;
+            pid_map_count++;
+        }
 
-            if (execvp(args[0], args) == -1) {
-                perror("Command failed");
-                exit(1);
-            }
-        }
-        else if (pid > 0) {
-            // In the parent shell, save the mapping
-            pid_map[pid_map_count++] = (PIDMap){pid, vm_pid};
-        }
-    } else if (pid > 0) {
         if (!background) {
             waitpid(pid, NULL, 0);
-        } else {
+        }
+        else {
             printf("Process running in background with PID %d\n", pid);
             add_job(pid, args[0]);
         }
-    } else {
+    }
+
+    else {
         perror("Fork failed");
     }
 }
@@ -170,7 +193,7 @@ void execute_pipeline(char *line, int background) {
             execvp(args[0], args);
             perror("execvp failed");
             exit(1);
-        } else if (pid > 0) {
+        } if (pid > 0) {
             // PARENT
             pids[i] = pid;
             if (in_fd != 0) close(in_fd);
@@ -194,6 +217,9 @@ void execute_pipeline(char *line, int background) {
 
 int main(int argc, char *argv[]) {
     FILE *input_source = stdin;
+
+    start_scheduler_threads();
+
     int batch_mode = 0;
 
     if (argc == 2) {
@@ -219,7 +245,7 @@ int main(int argc, char *argv[]) {
 
                     for (int k = 0; k < pid_map_count; k++) {
                         if (pid_map[k].shell_pid == jobs[j].pid) {
-                            free_process(pid_map[k].vm_pid);
+                            //free_process(pid_map[k].vm_pid);
                             break;
                         }
                     }
@@ -308,16 +334,16 @@ int main(int argc, char *argv[]) {
                 printf("All background jobs terminated.\n");
                 continue;
             }
-            else if (strcmp(args[0], "memaccess") == 0) {
+            if (strcmp(args[0], "memaccess") == 0) {
                 if (args[1] && args[2] && args[3]) {
                     pid_t spid = atoi(args[1]);
                     char mode = args[2][0];
                     int vaddr = atoi(args[3]);
 
                     // Lookup vm_pid
-                    for (int i = 0; i < pid_map_count; i++) {
-                        if (pid_map[i].shell_pid == spid) {
-                            int vm_pid = pid_map[i].vm_pid;
+                    for (int k = 0; k < pid_map_count; k++) {
+                        if (pid_map[k].shell_pid == spid) {
+                            int vm_pid = pid_map[k].vm_pid;
                             access_memory(&processes[vm_pid - 1], vm_pid, vaddr, mode);
                             break;
                         }
@@ -328,6 +354,23 @@ int main(int argc, char *argv[]) {
                 continue;
             }
 
+            if (strcmp(args[0], "create") == 0) {
+                if (args[1] == NULL) {
+                    printf("Usage: create <file_name>\n");
+                } else {
+                    create_file(args[1]);
+                }
+                continue;
+            }
+
+            if (strcmp(args[0], "delete") == 0) {
+                if (args[1] == NULL) {
+                    printf("Usage: delete <file_name>\n");
+                } else {
+                    delete_file(args[1]);
+                }
+                continue;
+            }
 
             // Background job detection
             int j = 0;
