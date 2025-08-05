@@ -1,0 +1,45 @@
+memaccess 1234 r 5
+memaccess 1234 w 10
+
+create testfile1.txt
+create testfile2.txt
+delete testfile1.txt
+
+mkdir dir1
+mkdir dir2
+createf file1.txt 128
+createf file2.txt 64
+tree
+
+move file1.txt dir1
+copy file2.txt copy_of_file2.txt
+tree
+
+copydir dir1 copy_of_dir1
+tree
+
+search file1.txt
+search copy_of_file2.txt
+search dir1
+
+info copy_of_file2.txt
+info file2.txt -d
+
+cd dir1
+pwd
+ls
+
+cd ..
+cd copy_of_dir1
+ls
+
+cd ..
+deletef copy_of_file2.txt
+rmdir copy_of_dir1 -f
+rmdir dir2
+
+editfile file2.txt HelloWorld
+info file2.txt -d
+
+end
+exit
