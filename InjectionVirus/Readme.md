@@ -1,6 +1,6 @@
 # Command Injection Simulation & Detection
 
-Kian Knudegaardd
+Kian Knudegaard
 
 This code injects a malicions command to overwrite the "rm" command with "rm -rf*" which recursively deletes a whole directory instead of just one file. 
 
